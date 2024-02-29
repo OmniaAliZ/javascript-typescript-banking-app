@@ -33,5 +33,3 @@ console.log(customer.getId());
 console.log(customer.getTransactions());
 console.log(customer.getBalance());
 
-// console.log(Customer.name);
-// console.log(Customer.id);
