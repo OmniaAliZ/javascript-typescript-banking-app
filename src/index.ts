@@ -89,6 +89,18 @@ class Bank {
       return null;
     }
   }
+  // Customer Search //!----------------
+  findCustomer(theBranch: Branch, customerName?: string, customerId?: number) {
+    let branch = this.branches.find(
+      (branch) => branch.getName() == theBranch.getName()
+    );
+    if (branch) {
+      branch.findCustomer(customerName, customerId);
+      return true;
+    } else {
+      return false;
+    }
+  } //!----------------
 }
 
 class Branch {
@@ -101,12 +113,12 @@ class Branch {
 
   addCustomer(theCustomer: Customer): boolean {
     if (this.customers.length !== 0) {
-      let customer = this.customers.find(
+      let customer: Customer | undefined = this.customers.find(
         (customer) => customer.getId() == theCustomer.getId()
       );
 
       if (customer) {
-        console.log('The customer already added');
+        console.log(`Customer '${theCustomer}' already added`);
         return false;
       }
     }
@@ -123,15 +135,46 @@ class Branch {
   }
 
   addCustomerTransaction(customerId: Customer, amount: number): boolean {
-    let customer = this.customers.find(
+    let customer: Customer | undefined = this.customers.find(
       (customer) => customer.getId() == customerId.getId()
     );
     if (customer) {
       customer.addTransactions(amount);
       return true;
     }
+    console.log(`Customer '${customerId}' not found.`);
     return false;
   }
+
+  // Customer Search //!----------------
+  findCustomer(customerName?: string, customerId?: number) {
+    if (typeof customerName !== 'undefined') {
+      let customer = this.customers.map((customer) =>
+        customer.getName().match(customerName)
+      );
+      if (customer) {
+        console.log(`Customer founded.`);
+        console.log(customer);
+
+        return true;
+      }
+      console.log(`Customer not founded.`);
+      return false;
+    } else if (typeof customerId !== 'undefined') {
+      let customer = this.customers.find(
+        (customer) => customer.getId() == customerId
+      );
+      if (customer) {
+        console.log(`Customer founded.`);
+        console.log(customer);
+        return true;
+      }
+      console.log(`Customer not founded.`);
+      return false;
+    }
+    console.log('Enter customer name or id to search!');
+    return false;
+  } //!----------------
 }
 
 class Customer {
@@ -203,3 +246,5 @@ customer1.addTransactions(-1000);
 console.log(customer1.getBalance());
 console.log(arizonaBank.listCustomers(westBranch, true));
 console.log(arizonaBank.listCustomers(sunBranch, true));
+
+arizonaBank.findCustomer(westBranch, 'John');
