@@ -33,13 +33,15 @@ class Bank {
     theBranch: Branch,
     customerId: Customer,
     amount: number
-  ) {
+  ): boolean {
     let branch = this.branches.find(
       (branch) => branch.getName() == theBranch.getName()
     );
     if (branch) {
       branch.addCustomerTransaction(customerId, amount);
+      return true;
     }
+    return false;
   }
 
   findBranchByName(theBranch: string) {
@@ -97,36 +99,38 @@ class Branch {
     this.customers = [];
   }
 
-  addCustomer(theCustomer: Customer) {
+  addCustomer(theCustomer: Customer): boolean {
     if (this.customers.length !== 0) {
       let customer = this.customers.find(
         (customer) => customer.getId() == theCustomer.getId()
       );
 
       if (customer) {
-        return console.log('The customer already added');
+        console.log('The customer already added');
+        return false;
       }
     }
-
     this.customers.push(theCustomer);
+    return true;
   }
 
-  getName() {
+  getName(): string {
     return this.name;
   }
 
-  getCustomers() {
+  getCustomers(): Customer[] {
     return this.customers;
   }
 
-  addCustomerTransaction(customerId: Customer, amount: number) {
+  addCustomerTransaction(customerId: Customer, amount: number): boolean {
     let customer = this.customers.find(
       (customer) => customer.getId() == customerId.getId()
     );
-    console.log(customer);
     if (customer) {
       customer.addTransactions(amount);
+      return true;
     }
+    return false;
   }
 }
 
