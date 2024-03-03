@@ -13,7 +13,7 @@ class Bank {
     // if no , throw Error("hey, this branch is existed already")
     let foundBranch = this.branches.find((item) => item.name == newBranch.name);
     if (foundBranch) {
-      console.log('hey the branch is existed already !!!');
+      console.log("hey the branch is existed already !!!");
       return false;
     }
     this.branches.push(newBranch);
@@ -44,10 +44,9 @@ class Bank {
     return false;
   }
 
-  findBranchByName(theBranch: string) {
-    let branch = this.branches.map((branch) =>
-      branch.getName().match(theBranch)
-    );
+  findBranchByName(theBranch: string): Branch[] | null {
+    let branch: Branch;
+    branch = this.branches.map((branch) => branch.getName().match(theBranch));
     if (branch) {
       return branch;
     } else {
@@ -55,26 +54,28 @@ class Bank {
     }
   }
 
-  checkBranch(theBranch: Branch) {
+  checkBranch(theBranch: Branch): boolean {
     let branch = this.branches.find(
       (branch) => branch.getName() == theBranch.getName()
     );
 
     if (branch) {
-      return branch;
+      console.log("branch exist");
+      return true;
     } else {
-      return null;
+      console.log("branch doesn't exist");
+      return false;
     }
   }
 
-  listCustomers(theBranch: Branch, includeTransactions: boolean) {
+  listCustomers(theBranch: Branch, includeTransactions: boolean): void {
     let branch = this.branches.find(
       (item) => item.getName() == theBranch.getName()
     );
 
     if (branch) {
       const customerList = branch.getCustomers();
-      console.log('Customer List');
+      console.log("Customer List");
       customerList.forEach((item: Customer) => {
         if (includeTransactions) {
           console.log(
@@ -86,11 +87,15 @@ class Bank {
       });
       return;
     } else {
-      return null;
+      return;
     }
   }
   // Customer Search //!----------------
-  findCustomer(theBranch: Branch, customerName?: string, customerId?: number) {
+  findCustomer(
+    theBranch: Branch,
+    customerName?: string,
+    customerId?: number
+  ): boolean {
     let branch = this.branches.find(
       (branch) => branch.getName() == theBranch.getName()
     );
@@ -148,7 +153,7 @@ class Branch {
 
   // Customer Search //!----------------
   findCustomer(customerName?: string, customerId?: number) {
-    if (typeof customerName !== 'undefined') {
+    if (typeof customerName !== "undefined") {
       let customer = this.customers.map((customer) =>
         customer.getName().match(customerName)
       );
@@ -160,7 +165,7 @@ class Branch {
       }
       console.log(`Customer not founded.`);
       return false;
-    } else if (typeof customerId !== 'undefined') {
+    } else if (typeof customerId !== "undefined") {
       let customer = this.customers.find(
         (customer) => customer.getId() == customerId
       );
@@ -172,7 +177,7 @@ class Branch {
       console.log(`Customer not founded.`);
       return false;
     }
-    console.log('Enter customer name or id to search!');
+    console.log("Enter customer name or id to search!");
     return false;
   } //!----------------
 }
@@ -219,19 +224,19 @@ class Transaction {
   }
 }
 
-const arizonaBank = new Bank('Arizona');
-const westBranch = new Branch('West Branch');
-const sunBranch = new Branch('Sun Branch');
-const customer1 = new Customer('John', 1);
-const customer2 = new Customer('Anna', 2);
-const customer3 = new Customer('John', 3);
+const arizonaBank = new Bank("Arizona");
+const westBranch = new Branch("West Branch");
+const sunBranch = new Branch("Sun Branch");
+const customer1 = new Customer("John", 1);
+const customer2 = new Customer("Anna", 2);
+const customer3 = new Customer("John", 3);
 
 arizonaBank.addBranch(westBranch);
 arizonaBank.addBranch(sunBranch);
 arizonaBank.addBranch(westBranch);
 
-arizonaBank.findBranchByName('bank');
-arizonaBank.findBranchByName('sun');
+arizonaBank.findBranchByName("bank");
+arizonaBank.findBranchByName("sun");
 
 arizonaBank.addCustomer(westBranch, customer1);
 arizonaBank.addCustomer(westBranch, customer3);
@@ -247,4 +252,4 @@ console.log(customer1.getBalance());
 console.log(arizonaBank.listCustomers(westBranch, true));
 console.log(arizonaBank.listCustomers(sunBranch, true));
 
-arizonaBank.findCustomer(westBranch, 'John');
+arizonaBank.findCustomer(westBranch, "John");
