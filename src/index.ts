@@ -86,7 +86,6 @@ class Bank {
   // console.log() , print () , no return value
 
   listCustomers(theBranch: Branch, includeTransactions: boolean): void {
-    //? : void
     let branch = this.branches.find(
       (item) => item.getName() == theBranch.getName()
     );
@@ -104,7 +103,7 @@ class Bank {
         };
       });
       console.log(JSON.stringify(customer, null, 2));
-      //?
+
       // get the customer transaction array and then console.log the transaction
     }
     console.log(JSON.stringify(customerList, null, 2));
