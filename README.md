@@ -19,7 +19,7 @@ Methods:
 - addBranch(branch: Branch): boolean
   Description: Adds the branch to the branches array. Each branch should only be added once.
   
-- addCustomer(branch: Branch, customer: Customer): boolean
+- addCustomer(branch: Branch, custo2mer: Customer): boolean
   Description: Adds the customer to the branch of the bank. Each customer can only be added once to a branch.
   
 - addCustomerTransaction(branch: Branch, customerId: string, amount: number): boolean
